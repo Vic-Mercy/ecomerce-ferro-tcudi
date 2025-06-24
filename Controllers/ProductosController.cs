@@ -4,23 +4,38 @@ using Microsoft.EntityFrameworkCore;
 using FerroShop.Data;
 using FerroShop.Models;
 using Microsoft.AspNetCore.Authorization;
+using FerroShop.Services;
 
 namespace FerroShop.Controllers
 {
     [Authorize(Policy = "RequiredAdminorStaff")]
     public class ProductosController : BaseController
     {
+        private readonly IProductoService _productoService;
 
-        public ProductosController(ApplicationDbContext context) :
-        base(context)
-        { }
+        public ProductosController(ApplicationDbContext context, IProductoService productoService)
+           : base(context)
+        {
+            _productoService = productoService;
+        }
 
         // GET: Productos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? busqueda, int pagina = 1)
+
         {
-            var applicationDbContext = _context.Productos.Include(p => p.Categoria);
-            return View(await applicationDbContext.ToListAsync());
+            int productosPorPagina = 10;
+
+            var viewModel = await _productoService.GetProductosPaginados(
+            categoriaId: null,
+            busqueda: busqueda,
+            pagina: pagina,
+            productosPorPagina: productosPorPagina
+         );
+
+            return View(viewModel);
+
         }
+
 
         // GET: Productos/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -120,7 +135,7 @@ namespace FerroShop.Controllers
                 return NotFound();
             }
 
-            // Actualiza los campos
+
             productoExistente.Codigo = producto.Codigo;
             productoExistente.Nombre = producto.Nombre;
             productoExistente.Modelo = producto.Modelo;
@@ -145,7 +160,7 @@ namespace FerroShop.Controllers
                 }
                 else
                 {
-                    // Error: retornamos la vista con el ViewData
+
                     ViewData["CategoriaId"] = new SelectList(
                         _context.Categorias, "CategoriaId", "Descripcion", producto.CategoriaId
                     );
@@ -194,5 +209,11 @@ namespace FerroShop.Controllers
         {
             return _context.Productos.Any(e => e.ProductoId == id);
         }
+
+    
+        
+    
     }
+      
+
 }

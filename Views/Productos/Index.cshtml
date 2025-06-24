@@ -1,4 +1,4 @@
-@model IEnumerable<FerroShop.Models.Producto>
+@model FerroShop.Models.ViewModels.ProductosPaginadosViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -9,81 +9,69 @@
 <p>
     <a asp-action="Create">Agregar producto</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Codigo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Modelo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Precio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Imagen)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Categoria)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Stock)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Marca)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Activo)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Codigo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Modelo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Precio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Imagen)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categoria.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Stock)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Marca)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Activo)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductoId">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.ProductoId">Detalles</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProductoId">Eliminar</a>
-            </td>
-        </tr>
+
+<form asp-action="Index" method="get" class="mb-3">
+    <input type="text" name="busqueda" value="@Model.Busqueda" class="form-control" placeholder="Buscar por nombre o descripción..." />
+    <button type="submit" class="btn btn-primary mt-2">Buscar</button>
+</form>
+
+@if (Model.MostrarMensajeSinResultados)
+{
+    <div class="alert alert-info">No se encontraron productos.</div>
 }
-    </tbody>
-</table>
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Productos.First().Codigo)</th>
+                <th>@Html.DisplayNameFor(model => model.Productos.First().Nombre)</th>
+                <th>@Html.DisplayNameFor(model => model.Productos.First().Modelo)</th>
+                <th>@Html.DisplayNameFor(model => model.Productos.First().Descripcion)</th>
+                <th>@Html.DisplayNameFor(model => model.Productos.First().Precio)</th>
+                <th>@Html.DisplayNameFor(model => model.Productos.First().Imagen)</th>
+                <th>@Html.DisplayNameFor(model => model.Productos.First().Categoria)</th>
+                <th>@Html.DisplayNameFor(model => model.Productos.First().Stock)</th>
+                <th>@Html.DisplayNameFor(model => model.Productos.First().Marca)</th>
+                <th>@Html.DisplayNameFor(model => model.Productos.First().Activo)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Productos)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Codigo)</td>
+                <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                <td>@Html.DisplayFor(modelItem => item.Modelo)</td>
+                <td>@Html.DisplayFor(modelItem => item.Descripcion)</td>
+                <td>@Html.DisplayFor(modelItem => item.Precio)</td>
+                <td>@Html.DisplayFor(modelItem => item.Imagen)</td>
+                <td>@Html.DisplayFor(modelItem => item.Categoria.Descripcion)</td>
+                <td>@Html.DisplayFor(modelItem => item.Stock)</td>
+                <td>@Html.DisplayFor(modelItem => item.Marca)</td>
+                <td>@Html.DisplayFor(modelItem => item.Activo)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ProductoId">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.ProductoId">Detalles</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ProductoId">Eliminar</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <nav class="d-flex justify-content-center">
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.TotalPaginas; i++)
+            {
+                <li class="page-item @(i == Model.PaginaActual ? "active" : "")">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-pagina="@i"
+                       asp-route-busqueda="@Model.Busqueda">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
