@@ -25,10 +25,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
-<ItemGroup>
-  <Content Include="Views/**/*.*" CopyToPublishDirectory="PreserveNewest" />
-  <Content Include="wwwroot/**/*.*" CopyToPublishDirectory="PreserveNewest" />
-</ItemGroup>
 
 
 </Project>
