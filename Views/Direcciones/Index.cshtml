@@ -1,0 +1,59 @@
+@model IEnumerable<FerroShop.Models.Direccion>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Gestion de direcciones del usuario</h1>
+
+<p>
+    <a asp-action="Create">Crear nueva direccion</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Provincia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Localidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodigoPostal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Provincia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Localidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodigoPostal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Usuario.Nombre)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.DireccionId">Editar</a> 
+                <a asp-action="Details" asp-route-id="@item.DireccionId">Detalles</a> 
+                <a asp-action="Delete" asp-route-id="@item.DireccionId">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

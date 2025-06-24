@@ -1,0 +1,103 @@
+﻿@model List<Producto>
+@{
+    ViewData["Title"] = "Inicio - FerroShop";
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" id="breadcrumb-container">
+
+       </ol>
+    </nav>   
+
+
+
+
+
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                @foreach(var categoria in ViewBag.Categorias)
+                {
+                    <a href="@Url.Action("Productos", "Home", new{categoriaId=categoria.CategoriaId})" class="btn
+                    btn-outline-secondary btn-sm">@categoria.Nombre</a>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+@if (ViewBag.BannerUrl != null)
+{
+    <div class="banner-ferro text-center my-4">
+        <img class="d-block w-75 mx-auto" src="@ViewBag.BannerUrl" alt="Ferro Equipando la Industria">
+    </div>
+}
+
+
+
+    <h2 class="my-4">Productos destacados</h2>
+    <div class="row" id="productosContainer">
+        @foreach(var producto in Model)
+        {
+          <div class="col-md-4 col-sm-6 mb-4 productoItem" data-categoria="@producto.CategoriaId">
+            <div class="card h-100 d-grid">
+                <a href="@Url.Action("DetalleProducto", "Home", new {id = producto.ProductoId})">
+                    <img class="card-img-top" src="@producto.Imagen" alt="Imagen del producto"/>
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title text-center"><a href="@Url.Action("DetalleProducto", "Home",
+                     new {id=producto.ProductoId})">@producto.Nombre</a></h5>
+                     <p class="card-text">@producto.Descripcion</p>
+              </div>
+              <ul class="list-group list-group-flush text-center">
+                <li class="list-group-item">Modelo: @producto.Modelo</li>
+                <li class="list-group-item font-weight-bold">@String.Format("{0:C}", producto.Precio)</li>
+              </ul>
+
+              <div class="card-body mt-auto">
+                @if(producto.Stock< 1)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        <i class="fas fa-exclamation-circle"></i> Agotado
+                    </div>
+
+                }else
+                {
+                    <form method="post" action="@Url.Action("AgregarProductoIndex")" class="d-flex d-none">
+
+                        <input type="hidden" name="id" value="@producto.ProductoId"/>
+                      
+                        <input type="number" class="form-control mr-2" name="cantidad" value="1" min="1" 
+                        max="@producto.Stock"/>
+                        <button type="submit" class="btn btn-outline-primary rounded-pill"><i
+                         class="fas fa-cart-plus"></i></button>
+
+                    </form>
+                }
+
+              </div>
+
+            </div>
+          </div>
+        }
+
+    </div>
+
+</div>
+@{
+    string? controllerName = Context.GetRouteValue("controller") as string;
+    string? actionName = Context.GetRouteValue("action") as string;
+}
+
+<script>
+    var controllerName='@controllerName';
+    var actionName='@actionName';
+</script>

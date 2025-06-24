@@ -1,0 +1,106 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+
+
+
+<div class="container mt-4">
+    <div class="bg-primary text-white p-4 rounded shadow mb-4">
+        <h1 class="mb-1">Panel de Administración</h1>
+        <p class="lead mb-0">Bienvenido. Accede a la gestión de los módulos principales.</p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+        
+        <div class="col">
+            <div class="card shadow-sm h-100 border-0 bg-light">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">👥 Usuarios</h5>
+                    <p class="card-text text-muted">Administra los usuarios del sistema.</p>
+                    <a href="@Url.Action("Index", "Usuarios")" class="btn btn-outline-primary">Ir</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="col">
+            <div class="card shadow-sm h-100 border-0 bg-light">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">🛡️ Roles</h5>
+                    <p class="card-text text-muted">Gestiona los permisos y accesos.</p>
+                    <a href="@Url.Action("Index", "Roles")" class="btn btn-outline-primary">Ir</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="col">
+            <div class="card shadow-sm h-100 border-0 bg-light">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">🛠️ Productos</h5>
+                    <p class="card-text text-muted">Controla el catálogo de ropa de trabajo.</p>
+                    <a href="@Url.Action("Index", "Productos")" class="btn btn-outline-primary">Ir</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="col">
+            <div class="card shadow-sm h-100 border-0 bg-light">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">📦 Pedidos</h5>
+                    <p class="card-text text-muted">Gestiona los pedidos realizados.</p>
+                    <a href="@Url.Action("Index", "Pedidos")" class="btn btn-outline-primary">Ir</a>
+                </div>
+            </div>
+        </div>
+
+      
+        <div class="col">
+            <div class="card shadow-sm h-100 border-0 bg-light">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">📍 Direcciones</h5>
+                    <p class="card-text text-muted">Administra las direcciones asociadas a los usuarios.</p>
+                    <a href="@Url.Action("Index", "Direcciones")" class="btn btn-outline-primary">Ir</a>
+                </div>
+            </div>
+        </div>
+
+       
+        <div class="col">
+            <div class="card shadow-sm h-100 border-0 bg-light">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">📝 Detalles de Pedidos</h5>
+                    <p class="card-text text-muted">Consulta los detalles específicos de cada pedido.</p>
+                    <a href="@Url.Action("Index", "DetallesPedidos")" class="btn btn-outline-primary">Ir</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="col">
+            <div class="card shadow-sm h-100 border-0 bg-light">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">🏷️ Categorías</h5>
+                    <p class="card-text text-muted">Gestiona las categorías de productos.</p>
+                    <a href="@Url.Action("Index", "Categorias")" class="btn btn-outline-primary">Ir</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col">
+            <div class="card shadow-sm h-100 border-0 bg-light">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">🏳️ Banners</h5>
+                    <p class="card-text text-muted">Gestiona de banners de la pagina.</p>
+                    <a href="@Url.Action("Index", "Banners")" class="btn btn-outline-primary">Ir</a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
